@@ -3,11 +3,10 @@ from views import (
     borrow_book,
     return_book,
     show_available_books,
-    show_borrowed_books
+    show_borrowed_books,
 )
 
 while True:
-
     print("\n===== LIBRARY BOOK BORROWING SYSTEM =====")
     print("1. Show All Books")
     print("2. Borrow Book")
@@ -34,8 +33,8 @@ while True:
         show_borrowed_books()
 
     elif choice == "6":
-        print("Thank you for using the Library Book Borrowing System!")
+        print("Thank you!")
         break
 
     else:
-        print("Invalid choice. Please try again.")
+        print("Invalid choice.")

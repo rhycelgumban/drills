@@ -1,64 +1,58 @@
 from models import books
 
+
 def show_books():
     print("\n===== ALL BOOKS =====")
+
     for i, book in enumerate(books, start=1):
         status = "Borrowed" if book["is_borrowed"] else "Available"
-        borrower = book["borrowed_by"] if book["borrowed_by"] else "-"
-        print(f"{i}. {book['title']} by {book['author']}")
+
+        print(f"{i}. {book['title']}")
+        print(f"   Author: {book['author']}")
         print(f"   Status: {status}")
-        print(f"   Borrowed By: {borrower}\n")
+
+        if book["is_borrowed"]:
+            print(f"   Borrowed by: {book['borrowed_by']}")
+
+        print()
 
 
 def borrow_book():
     show_books()
 
-    choice = int(input("Enter book number to borrow: "))
+    number = int(input("Select book number: ")) - 1
 
-    if 1 <= choice <= len(books):
-        book = books[choice - 1]
-
-        if book["is_borrowed"]:
-            print("This book is already borrowed.")
-        else:
-            student = input("Enter student name: ")
-            book["is_borrowed"] = True
-            book["borrowed_by"] = student
-            print("Book borrowed successfully!")
+    if books[number]["is_borrowed"]:
+        print("Book is already borrowed.")
     else:
-        print("Invalid book number.")
+        student = input("Student name: ")
+
+        books[number]["is_borrowed"] = True
+        books[number]["borrowed_by"] = student
+
+        print("Book borrowed successfully.")
 
 
 def return_book():
     show_books()
 
-    choice = int(input("Enter book number to return: "))
+    number = int(input("Select book number: ")) - 1
 
-    if 1 <= choice <= len(books):
-        book = books[choice - 1]
+    if books[number]["is_borrowed"]:
+        books[number]["is_borrowed"] = False
+        books[number]["borrowed_by"] = ""
 
-        if not book["is_borrowed"]:
-            print("This book is already available.")
-        else:
-            book["is_borrowed"] = False
-            book["borrowed_by"] = ""
-            print("Book returned successfully!")
+        print("Book returned successfully.")
     else:
-        print("Invalid book number.")
+        print("Book is already available.")
 
 
 def show_available_books():
     print("\n===== AVAILABLE BOOKS =====")
 
-    found = False
-
-    for i, book in enumerate(books, start=1):
+    for book in books:
         if not book["is_borrowed"]:
-            print(f"{i}. {book['title']} by {book['author']}")
-            found = True
-
-    if not found:
-        print("No available books.")
+            print(f"- {book['title']} by {book['author']}")
 
 
 def show_borrowed_books():
@@ -66,9 +60,9 @@ def show_borrowed_books():
 
     found = False
 
-    for i, book in enumerate(books, start=1):
+    for book in books:
         if book["is_borrowed"]:
-            print(f"{i}. {book['title']} - Borrowed by {book['borrowed_by']}")
+            print(f"- {book['title']} (Borrowed by {book['borrowed_by']})")
             found = True
 
     if not found:
