@@ -23,7 +23,7 @@ rl.question("May kwarta ka? (huo/wala): ", (answer) => {
         console.log("Order na ta!");
         rl.close();
     } else {
-        rl.question("Libre mo? (huo/nd): ", (answer) => {
+        rl.question("Libre ko? (huo/nd): ", (answer) => {
 
             const libre = answer.toLowerCase() === "huo";
 
